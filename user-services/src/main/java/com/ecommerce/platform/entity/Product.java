@@ -16,7 +16,6 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.PositiveOrZero;
 
 @Entity
 @Table(name = "products")
@@ -38,10 +37,6 @@ public class Product extends BaseEntity{
 	@NotBlank(message = "Product description is required")
 	@Column(nullable = false, columnDefinition = "TEXT")
 	private String description;
-	
-	@PositiveOrZero(message = "Stock quantity cannot be negeative")
-	@Column(nullable = false)
-	private Integer stockQuantity;
 	
 	@NotBlank(message = "Image Url is Required")
 	@URL(message = "Link should be in Url format" )
