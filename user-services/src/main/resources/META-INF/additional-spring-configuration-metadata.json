@@ -8,5 +8,30 @@
     "name": "jwt.expiration",
     "type": "java.lang.String",
     "description": "A description for 'jwt.expiration'"
+  },
+  {
+    "name": "notification.retry.max-attempts",
+    "type": "java.lang.String",
+    "description": "A description for 'notification.retry.max-attempts'"
+  },
+  {
+    "name": "notification.processing.delay",
+    "type": "java.lang.String",
+    "description": "A description for 'notification.processing.delay'"
+  },
+  {
+    "name": "notification.retry.delay",
+    "type": "java.lang.String",
+    "description": "A description for 'notification.retry.delay'"
+  },
+  {
+    "name": "notification.processing.timeout",
+    "type": "java.lang.String",
+    "description": "A description for 'notification.processing.timeout'"
+  },
+  {
+    "name": "notification.recovery.delay",
+    "type": "java.lang.String",
+    "description": "A description for 'notification.recovery.delay'"
   }
 ]}

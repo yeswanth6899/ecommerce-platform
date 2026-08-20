@@ -1,5 +1,9 @@
 package com.ecommerce.platform.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -7,6 +11,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -41,20 +46,30 @@ public class User extends BaseEntity {
 				 message = "Phone number must be exactly 10 digits")
 		private String phoneNumber;
 		
+		@OneToMany(
+				mappedBy = "user",
+				cascade = CascadeType.ALL,
+				orphanRemoval = true
+				)
+		private List<UserAddress> userAddresses = new ArrayList<>();
 		
 		
 		public User() {
 			
 		}
 
+		
 
-		public User(String firstName, String lastName, String email, String phoneNumber) {
+		public User(String firstName, String lastName, String email, String password, Role role, String phoneNumber) {
 			
 			this.firstName = firstName;
 			this.lastName = lastName;
 			this.email = email;
+			this.password = password;
+			this.role = role;
 			this.phoneNumber = phoneNumber;
 		}
+
 
 
 		public Long getId() {
@@ -124,5 +139,30 @@ public class User extends BaseEntity {
 
 		public void setPhoneNumber(String phoneNumber) {
 			this.phoneNumber = phoneNumber;
+		}
+		
+		public List<UserAddress> getUserAddresses() {
+			return userAddresses;
+		}
+
+		public void setUserAddresses(List<UserAddress> userAddresses) {
+			this.userAddresses = userAddresses;
+		}
+
+		
+		//Helper Methods
+
+		public void addAddress(UserAddress address) {
+
+		    userAddresses.add(address);
+
+		    address.setUser(this);
+		}
+		
+		public void removeAddress(UserAddress address) {
+
+		    userAddresses.remove(address);
+
+		    address.setUser(null);
 		}
 }

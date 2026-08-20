@@ -2,16 +2,18 @@ package com.ecommerce.platform.dto;
 
 import java.math.BigDecimal;
 
+import com.ecommerce.platform.entity.ProductAvailabilityStatus;
+
 public class ProductResponse {
 	
 	private Long id;
 	private String name;
 	private BigDecimal price;
 	private String description;
-	private Integer stockQuantity;
 	private String imageUrl;
 	private Long categoryId;
 	private String categoryName;
+	private ProductAvailabilityStatus availabilityStatus;
 	
 	
 	public ProductResponse() {
@@ -19,19 +21,21 @@ public class ProductResponse {
 	}
 
 
-	public ProductResponse(Long id, String name, BigDecimal price, String description, Integer stockQuantity,
-			String imageUrl, Long categoryId, String categoryName) {
+	
+
+
+	public ProductResponse(Long id, String name, BigDecimal price, String description, String imageUrl, Long categoryId,
+			String categoryName, ProductAvailabilityStatus availabilityStatus) {
 		
 		this.id = id;
 		this.name = name;
 		this.price = price;
 		this.description = description;
-		this.stockQuantity = stockQuantity;
 		this.imageUrl = imageUrl;
 		this.categoryId = categoryId;
 		this.categoryName = categoryName;
+		this.availabilityStatus = availabilityStatus;
 	}
-
 
 	public Long getId() {
 		return id;
@@ -72,17 +76,6 @@ public class ProductResponse {
 		this.description = description;
 	}
 
-
-	public Integer getStockQuantity() {
-		return stockQuantity;
-	}
-
-
-	public void setStockQuantity(Integer stockQuantity) {
-		this.stockQuantity = stockQuantity;
-	}
-
-
 	public String getImageUrl() {
 		return imageUrl;
 	}
@@ -111,5 +104,13 @@ public class ProductResponse {
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
 	}
+
+	public ProductAvailabilityStatus getAvailabilityStatus() {
+		return availabilityStatus;
+	}
+
+	public void setAvailabilityStatus(ProductAvailabilityStatus availabilityStatus) {
+		this.availabilityStatus = availabilityStatus;
+	}	
 
 }

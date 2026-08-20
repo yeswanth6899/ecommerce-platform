@@ -1,39 +1,33 @@
-# =========================
-# Java
-# =========================
-*.class
-*.log
-*.ctxt
-hs_err_pid*
-replay_pid*
-
-# =========================
-# Maven
-# =========================
+HELP.md
 target/
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
 
-# =========================
-# IDE Files
-# =========================
-.idea/
-*.iml
-
-.project
+### STS ###
+.apt_generated
 .classpath
-.settings/
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
 
-# VS Code
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
 .vscode/
-
-# =========================
-# OS Files
-# =========================
-.DS_Store
-Thumbs.db
-
-# =========================
-# Local Configuration
-# =========================
-.env
-application-local.properties
-application-dev.properties

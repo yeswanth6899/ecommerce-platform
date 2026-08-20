@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +21,7 @@ import com.ecommerce.platform.service.ProductService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("/api/v1/products")
 public class ProductController {
 	
 	private final ProductService productService;
@@ -31,6 +32,7 @@ public class ProductController {
 	}
 	
 	@PostMapping
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<ProductResponse> createProduct(@Valid @RequestBody ProductRequest request){
 		
 		ProductResponse response = productService.createProduct(request);
@@ -40,6 +42,7 @@ public class ProductController {
 	}
 	
 	@GetMapping("/{id}")
+	@PreAuthorize("hasAnyRole('USER','ADMIN')")
 	public ResponseEntity<ProductResponse> getProductById(@PathVariable Long id){
 		
 //		ProductResponse response = productService.getProductById(id);
@@ -51,6 +54,7 @@ public class ProductController {
 	}
 	
 	@GetMapping
+	@PreAuthorize("hasAnyRole('USER','ADMIN')")
 	public ResponseEntity<List<ProductResponse>> getAllProducts(){
 		
 		List<ProductResponse> response = productService.getAllProducts();
@@ -59,6 +63,7 @@ public class ProductController {
 	}
 	
 	@GetMapping("/category/{categoryId}")
+	@PreAuthorize("hasAnyRole('USER','ADMIN')")
 	public ResponseEntity<List<ProductResponse>> getProductByCategory(@PathVariable Long categoryId){
 		
 		List<ProductResponse> response = productService.getProductsByCategory(categoryId);
@@ -68,6 +73,7 @@ public class ProductController {
 	}
 	
 	@PutMapping("/{id}")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<ProductResponse> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductRequest request){
 		
 		ProductResponse response = productService.updateProduct(id, request);
@@ -76,6 +82,7 @@ public class ProductController {
 	}
 	
 	@DeleteMapping("/{id}")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
 
 	    productService.deleteProduct(id);

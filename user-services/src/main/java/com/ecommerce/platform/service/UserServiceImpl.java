@@ -19,6 +19,8 @@ import com.ecommerce.platform.dto.LoginResponse;
 import com.ecommerce.platform.dto.RegisterUserRequest;
 import com.ecommerce.platform.dto.UserProfileRequest;
 import com.ecommerce.platform.dto.UserProfileResponse;
+import com.ecommerce.platform.entity.Cart;
+import com.ecommerce.platform.entity.NotificationType;
 import com.ecommerce.platform.entity.Role;
 import com.ecommerce.platform.entity.User;
 import com.ecommerce.platform.exception.InvalidCredentialsException;
@@ -27,6 +29,7 @@ import com.ecommerce.platform.exception.InvalidPasswordException;
 import com.ecommerce.platform.exception.UserAlreadyExistsException;
 import com.ecommerce.platform.exception.UserNotFoundException;
 import com.ecommerce.platform.mapper.UserMapper;
+import com.ecommerce.platform.repository.CartRepository;
 import com.ecommerce.platform.repository.UserRepository;
 import com.ecommerce.platform.response.ApiResponse;
 import com.ecommerce.platform.security.JwtService;
@@ -39,14 +42,23 @@ public class UserServiceImpl implements UserService{
 	private final UserMapper userMapper;
 	private final JwtService jwtService;
 	private final AuthenticationManager authenticationManager;
+	private final NotificationService notificationService;
+	private final CartRepository cartRepository;
 	
-	public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, UserMapper userMapper, JwtService jwtService, AuthenticationManager authenticationManager) {
-		
+	
+	
+
+	public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, UserMapper userMapper,
+			JwtService jwtService, AuthenticationManager authenticationManager, NotificationService notificationService,
+			CartRepository cartRepository) {
+		super();
+		this.userRepository = userRepository;
 		this.passwordEncoder = passwordEncoder;
 		this.userMapper = userMapper;
-		this.userRepository = userRepository;
 		this.jwtService = jwtService;
 		this.authenticationManager = authenticationManager;
+		this.notificationService = notificationService;
+		this.cartRepository = cartRepository;
 	}
 
 	@Override
@@ -62,10 +74,21 @@ public class UserServiceImpl implements UserService{
 		
 		user.setPassword(encodedPassword);
 		user.setRole(Role.USER);
-		user.setCreatedAt(LocalDateTime.now());
-		user.setUpdatedAt(LocalDateTime.now());
 		
-		userRepository.save(user);
+		User savedUser = userRepository.save(user);
+		
+		Cart cart = new Cart();
+		cart.setUser(savedUser);
+
+		cartRepository.save(cart);
+		
+		notificationService.createNotification(savedUser,
+											   null,
+											   NotificationType.WELCOME,
+											   "Welcome to E-commerce platform!",
+											   "Your Account has been created successfully!");
+		
+		
 		return new ApiResponse<>(
 				HttpStatus.CREATED.value(),
 				"User Created Successfully.",

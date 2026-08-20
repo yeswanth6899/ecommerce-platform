@@ -7,7 +7,6 @@ import org.hibernate.validator.constraints.URL;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 
 public class ProductRequest {
@@ -19,9 +18,6 @@ public class ProductRequest {
 	private BigDecimal price;
 	@NotBlank(message = "Product description is required")
 	private String description;
-	@NotNull(message = "Stock Quantity is required")
-	@PositiveOrZero(message = "Stock Quantity cannot be negative")
-	private Integer stockQuantity;
 	@NotBlank(message = "Image url is required")
 	@URL(message = "Url should be valid")
 	@Size(max = 1000, message = "Image URL must not exceed 1000 characters")
@@ -36,12 +32,11 @@ public class ProductRequest {
 	}
 
 
-	public ProductRequest(String name, BigDecimal price, String description, Integer stockQuantity, String imageUrl,Long categoryId) {
+	public ProductRequest(String name, BigDecimal price, String description, String imageUrl,Long categoryId) {
 		
 		this.name = name;
 		this.price = price;
 		this.description = description;
-		this.stockQuantity = stockQuantity;
 		this.imageUrl = imageUrl;
 		this.categoryId = categoryId;
 	}
@@ -75,17 +70,6 @@ public class ProductRequest {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-
-	public Integer getStockQuantity() {
-		return stockQuantity;
-	}
-
-
-	public void setStockQuantity(Integer stockQuantity) {
-		this.stockQuantity = stockQuantity;
-	}
-
 
 	public String getImageUrl() {
 		return imageUrl;

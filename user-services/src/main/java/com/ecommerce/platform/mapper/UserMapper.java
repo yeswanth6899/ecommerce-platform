@@ -19,6 +19,7 @@ public class UserMapper {
 		user.setFirstName(request.getFirstName());
 		user.setLastName(request.getLastName());
 		user.setEmail(request.getEmail());
+		user.setPhoneNumber(request.getPhoneNumber());
 		return user;
 		
 		

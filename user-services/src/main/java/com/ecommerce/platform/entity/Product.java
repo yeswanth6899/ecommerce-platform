@@ -16,7 +16,6 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.PositiveOrZero;
 
 @Entity
 @Table(name = "products")
@@ -27,7 +26,7 @@ public class Product extends BaseEntity{
 	private Long id;
 	
 	@NotBlank(message = "Product name is required")
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String name;
 	
 	@NotNull(message= "Price is Required")
@@ -38,10 +37,6 @@ public class Product extends BaseEntity{
 	@NotBlank(message = "Product description is required")
 	@Column(nullable = false, columnDefinition = "TEXT")
 	private String description;
-	
-	@PositiveOrZero(message = "Stock quantity cannot be negeative")
-	@Column(nullable = false)
-	private Integer stockQuantity;
 	
 	@NotBlank(message = "Image Url is Required")
 	@URL(message = "Link should be in Url format" )
@@ -56,12 +51,11 @@ public class Product extends BaseEntity{
 		
 	}
 
-	public Product(String name, BigDecimal price,String description, Integer stockQuantity, String imageUrl,Category category) {
+	public Product(String name, BigDecimal price, String description, String imageUrl, Category category) {
 	
 		this.name = name;
 		this.price = price;
 		this.description = description;
-		this.stockQuantity = stockQuantity;
 		this.imageUrl = imageUrl;
 		this.category = category;
 	}
@@ -97,15 +91,6 @@ public class Product extends BaseEntity{
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-	public Integer getStockQuantity() {
-		return stockQuantity;
-	}
-
-	public void setStockQuantity(Integer stockQuantity) {
-		this.stockQuantity = stockQuantity;
-	}
-
 	public String getImageUrl() {
 		return imageUrl;
 	}

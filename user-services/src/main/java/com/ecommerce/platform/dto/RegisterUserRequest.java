@@ -30,19 +30,30 @@ public class RegisterUserRequest {
 			 message = "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one digit, and one special character")
 	private String password;
 	
+	@NotBlank(message = "Phone number is Required")
+	@Pattern(regexp = "^[0-9]{10}$",
+			 message = "Phone number must be exactly 10 digits")
+	private String phoneNumber;
 	
 	public RegisterUserRequest() {
 		
 	}
 
 
-	public RegisterUserRequest(String firstName, String lastName, String email, String password) {
+	
+
+
+	public RegisterUserRequest(String firstName, String lastName,String email, String password,String phoneNumber) {
 		
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
+		this.phoneNumber = phoneNumber;
 	}
+
+
+
 
 
 	public String getFirstName() {
@@ -83,4 +94,13 @@ public class RegisterUserRequest {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+	
 }

@@ -54,19 +54,26 @@ public class SecurityConfig {
 	}
 	
 	@Bean
-	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-		http.csrf(csrf -> csrf.disable())
-			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-			.authenticationProvider(authenticationProvider())
-			.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-			.authorizeHttpRequests(auth -> auth.requestMatchers("/api/v1/users/register"
-																,"/api/v1/users/login")
-					.permitAll()
-					.anyRequest()
-					.authenticated());
-		return http.build();
+	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+	    http.csrf(csrf -> csrf.disable())
+	        .sessionManagement(session ->
+	                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+	        .authenticationProvider(authenticationProvider())
+	        .addFilterBefore(jwtAuthenticationFilter,
+	                UsernamePasswordAuthenticationFilter.class)
+	        .authorizeHttpRequests(auth -> auth
+
+	            // Public APIs
+	            .requestMatchers("/api/v1/users/register",
+	                             "/api/v1/users/login")
+	            .permitAll()
+
+	            // Everything else
+	            .anyRequest()
+	            .authenticated());
+
+	    return http.build();
+	}
 		
-		}
-	
-	
 }
